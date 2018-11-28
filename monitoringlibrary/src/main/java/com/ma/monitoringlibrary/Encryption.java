@@ -12,15 +12,15 @@ import javax.crypto.spec.SecretKeySpec;
  * Created by abeer on 20-Nov-16.
  */
 
-public class Security {
+public class Encryption {
     private String key;
 
-    public  Security(String key)
+    protected Encryption(String key)
     {
         this.key = key;
     }
 
-    public  String Decrypt(String text) throws Exception {
+    protected String Decrypt(String text) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding"); //this parameters should not be changed
         byte[] keyBytes = new byte[16];
         byte[] b = key.getBytes("UTF-8");
@@ -41,7 +41,7 @@ public class Security {
         return new String(results, "UTF-8"); // it returns the result as a String
     }
 
-    public  String Encrypt(String text) throws Exception {
+    protected String Encrypt(String text) throws Exception {
         Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
         byte[] keyBytes = new byte[16];
         byte[] b = key.getBytes("UTF-8");

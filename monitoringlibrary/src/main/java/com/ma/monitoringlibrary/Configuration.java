@@ -36,7 +36,6 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class Configuration {
 
-
     private Activity activity;
     private SharedPreferences prefs;
 
@@ -61,9 +60,6 @@ public class Configuration {
             // true for enabled
             editor.putBoolean(activity.getString(R.string.ToolsStatus), true);
             editor.putBoolean(activity.getString(R.string.GpsStatus), true);
-            //initializing count for #Measurement.class method : start
-            editor.putInt(activity.getString(R.string.HttpIdCounter),0);
-            editor.putInt(activity.getString(R.string.DnsIdCounter),0);
 
             editor.apply();
             // write location for first time
@@ -92,7 +88,7 @@ public class Configuration {
                 public void onLocationChanged(Location location) {
                     SharedPreferences.Editor editor = prefs.edit();
 
-                    editor.putFloat("location lat", (float) location.getLongitude());
+                    editor.putFloat("location lat", (float) location.getLatitude());
                     editor.putFloat("location long", (float) location.getLongitude());
                     editor.apply();
 
@@ -204,6 +200,9 @@ public class Configuration {
             jsonProperties.put("product", product);
             jsonProperties.put("operatorName", operatorName);
             jsonProperties.put("SIMOperatorName", SIMOperatorName);
+
+
+            /*TODO Send jsonProperties as string  */
 
         } catch (JSONException e) {
             e.printStackTrace();

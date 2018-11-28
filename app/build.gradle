@@ -27,5 +27,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     implementation 'commons-codec:commons-codec:1.10'
     implementation project(':monitoringlibrary')
-    implementation files('libs/ksoap2-android-assembly-2.6.2-jar-with-dependencies.jar')
 }
