@@ -24,7 +24,7 @@ public class Compression {
             bos.close();
 
             // Convert to base64
-           // compressed = Base64.decode(compr0essed,Base64.DEFAULT);
+           // compressed = Base64.decode(compressed,Base64.DEFAULT);
             compressed=  org.apache.commons.codec.binary.Base64.encodeBase64(compressed);
            // return URLEncoder.encode(new String(compressed),"UTF-8");
 

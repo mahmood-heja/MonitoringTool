@@ -13,7 +13,7 @@ import com.ma.monitoringlibrary.R;
 public class SettingActivity extends AppCompatActivity {
 
 
-    private Switch location_sw;
+    private Switch location_sw, libs_sw;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +26,22 @@ public class SettingActivity extends AppCompatActivity {
         final SharedPreferences preferences = getSharedPreferences(getString(R.string.monitoringPref), MODE_PRIVATE);
 
         location_sw = findViewById(R.id.GpsSwitch);
+        libs_sw = findViewById(R.id.libsSwitch);
 
         location_sw.setChecked(preferences.getBoolean(getString(R.string.GpsStatus), false));
+        libs_sw.setChecked(preferences.getBoolean(getString(R.string.ToolsStatus), false));
 
         location_sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                preferences.edit().putBoolean(getString(R.string.GpsStatus),isChecked).apply();
+                preferences.edit().putBoolean(getString(R.string.GpsStatus), isChecked).apply();
+            }
+        });
+
+        libs_sw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                preferences.edit().putBoolean(getString(R.string.ToolsStatus), isChecked).apply();
             }
         });
 
@@ -52,12 +61,10 @@ public class SettingActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public void onBackPressed() {
         finish();
     }
-
 
 
 }

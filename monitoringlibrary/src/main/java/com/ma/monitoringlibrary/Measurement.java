@@ -66,6 +66,8 @@ public class Measurement {
 
     public synchronized int start(Type type) {
         int id = 1;
+        if (!preferences.getBoolean(context.getString(R.string.ToolsStatus), true))
+            return -1;
 
         if (type == Type.HTTP) {
             id = preferences.getInt(context.getString(R.string.HttpIdCounter), 1);
@@ -82,6 +84,9 @@ public class Measurement {
 
     @SuppressLint("SimpleDateFormat")
     public synchronized void end(Type type, int id) {
+        if (id == -1)
+            return;
+
         long currentTime = System.currentTimeMillis();
 
         long startTime = preferences.getLong("Time start :" + id + "_" + type, -1);
@@ -147,12 +152,12 @@ public class Measurement {
             for (int i = 0; i < numberOfItems; i++) {
                 JSONObject measureObject = new JSONObject();
 
-                long locationLong= (long) (preferences.getFloat("Location long :" + (firstId + i) + "_" + type, 200)*Math.pow(10.0, 15.0));
-                long locationLat= (long) (preferences.getFloat("Location lat :" + (firstId + i) + "_" + type, 100)*Math.pow(10.0, 15.0));
+                long locationLong = (long) (preferences.getFloat("Location long :" + (firstId + i) + "_" + type, 200) * Math.pow(10.0, 15.0));
+                long locationLat = (long) (preferences.getFloat("Location lat :" + (firstId + i) + "_" + type, 100) * Math.pow(10.0, 15.0));
 
 
                 measureObject.put("Time total", preferences.getFloat("Time total :" + (firstId + i) + "_" + type, -1));
-                measureObject.put("Location long",locationLong);
+                measureObject.put("Location long", locationLong);
                 measureObject.put("Location lat", locationLat);
                 measureObject.put("date", preferences.getString("Data :" + (firstId + i) + "_" + type, ""));
                 measureObject.put("type", type);
@@ -202,12 +207,12 @@ public class Measurement {
             for (int i = 0; i < numberOfItem; i++) {
                 JSONObject measureObject = new JSONObject();
 
-                long locationLong= (long) (preferences.getFloat("Location long :" + (firstId + i) + "_" + type, 200)*Math.pow(10.0, 15.0));
-                long locationLat= (long) (preferences.getFloat("Location lat :" + (firstId + i) + "_" + type, 100)*Math.pow(10.0, 15.0));
+                long locationLong = (long) (preferences.getFloat("Location long :" + (firstId + i) + "_" + type, 200) * Math.pow(10.0, 15.0));
+                long locationLat = (long) (preferences.getFloat("Location lat :" + (firstId + i) + "_" + type, 100) * Math.pow(10.0, 15.0));
 
 
                 measureObject.put("Time total", preferences.getFloat("Time total :" + (firstId + i) + "_" + type, -1));
-                measureObject.put("Location long",locationLong);
+                measureObject.put("Location long", locationLong);
                 measureObject.put("Location lat", locationLat);
                 measureObject.put("date", preferences.getString("Data :" + (firstId + i) + "_" + type, ""));
                 measureObject.put("type", type);
@@ -224,10 +229,12 @@ public class Measurement {
                     Log.e("origin", String.valueOf(packageObject.toString()));
 
                     String compressedPackage = Compression.Compress(packageObject.toString());
-                    String encryptPackage = new Encryption(String.valueOf(System.currentTimeMillis())).Encrypt(compressedPackage);
+                    //   String encryptPackage = new Encryption(String.valueOf(System.currentTimeMillis())).Encrypt(compressedPackage);
 
-                  //  String encryptPackage = new Encryption(String.valueOf(System.currentTimeMillis())).Encrypt(packageObject.toString());
-                  //  String compressedPackage = Compression.Compress(encryptPackage);
+                    String encryptPackage = new RSACipher().encrypt(compressedPackage);
+
+                    //  String encryptPackage = new Encryption(String.valueOf(System.currentTimeMillis())).Encrypt(packageObject.toString());
+                    //  String compressedPackage = Compression.Compress(encryptPackage);
 
                     /*TODO Send encryptPackage */
                     Log.e("compression", String.valueOf(compressedPackage));
@@ -245,6 +252,8 @@ public class Measurement {
         }
 
     }
+
+
 
     public enum Type {
         HTTP,

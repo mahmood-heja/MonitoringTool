@@ -119,7 +119,6 @@ public class Configuration {
     }
 
     private void checkDeviceLocationIsOn() {
-        System.out.println("Test running setting request");
         LocationRequest locationRequest = LocationRequest.create();
         locationRequest.setPriority(LocationRequest.PRIORITY_LOW_POWER);
         LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder()
@@ -137,7 +136,6 @@ public class Configuration {
                     // All location settings are satisfied. The client can initialize location
                     // requests here.
                     // All location settings are satisfied.
-                    Log.e("Location", "All location settings are satisfied. The client can initialize location");
                     writeLocation();
 
                 } catch (ApiException exception) {
@@ -159,7 +157,6 @@ public class Configuration {
                         case LocationSettingsStatusCodes.SETTINGS_CHANGE_UNAVAILABLE:
                             // Location settings are not satisfied. However, we have no way to fix the
                             // settings so we won't show the dialog.
-                            Log.e("Location", "SETTINGS_CHANGE_UNAVAILABLE");
                             break;
                     }
                 }

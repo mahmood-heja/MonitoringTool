@@ -9,14 +9,29 @@
     android:paddingTop="12dp"
     tools:context=".SettingActivity.SettingActivity">
 
+
     <Switch
-        android:id="@+id/GpsSwitch"
+        android:id="@+id/libsSwitch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
         android:textSize="18sp"
         android:textStyle="bold"
         android:elevation="6dp"
+        android:background="#6e767676"
+        android:text="Use Monitoring Tools"/>
+
+
+    <Switch
+        android:id="@+id/GpsSwitch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:textSize="18sp"
+        android:layout_marginTop="12dp"
+        android:textStyle="bold"
+        android:elevation="6dp"
+        android:layout_marginStart="12dp"
         android:background="#6e767676"
         android:text="Location"/>
 

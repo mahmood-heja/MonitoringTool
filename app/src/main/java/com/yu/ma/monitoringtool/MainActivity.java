@@ -14,8 +14,15 @@ import android.view.View;
 import com.ma.monitoringlibrary.Compression;
 import com.ma.monitoringlibrary.Configuration;
 import com.ma.monitoringlibrary.Measurement;
+import com.ma.monitoringlibrary.RSACipher;
 
 import java.io.IOException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.NoSuchPaddingException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -40,9 +47,25 @@ public class MainActivity extends AppCompatActivity {
 
         try {
             t=Compression.Compress(t);
-            Log.e("ttttt",t);
+
+//            RSACipher rsa=new RSACipher();
+
+  //          PublicKey publicKey=RSACipher.stringToPublicKey(rsa.getPublicKey("pkcs1-pem"));
+            String encryptPackage=new RSACipher().encrypt(t);
+
+            Log.e("ttttt",encryptPackage);
 
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NoSuchPaddingException e) {
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        } catch (InvalidKeyException e) {
+            e.printStackTrace();
+        } catch (IllegalBlockSizeException e) {
+            e.printStackTrace();
+        } catch (BadPaddingException e) {
             e.printStackTrace();
         }
 
