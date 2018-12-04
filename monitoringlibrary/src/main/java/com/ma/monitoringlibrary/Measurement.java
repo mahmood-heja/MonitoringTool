@@ -3,12 +3,15 @@ package com.ma.monitoringlibrary;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 
+
+import com.ma.monitoringlibrary.SettingActivity.SettingActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,6 +38,9 @@ public class Measurement {
         new Configuration(activity);
     }
 
+    public static void showSettingActivity(Context context) {
+        context.startActivity(new Intent(context, SettingActivity.class));
+    }
 
     public Measurement(Context context) {
         this.context = context;

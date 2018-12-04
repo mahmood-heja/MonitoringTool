@@ -34,7 +34,7 @@ import org.json.JSONObject;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class Configuration {
+class Configuration {
 
     private Activity activity;
     private SharedPreferences prefs;
@@ -183,7 +183,7 @@ public class Configuration {
                 (activity.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
 
         // save ANDROID_ID
-        prefs.edit().putString(activity.getString(R.string.deviceID),serialNumber).apply();
+        prefs.edit().putString(activity.getString(R.string.deviceID), serialNumber).apply();
 
 
         JSONObject jsonProperties = new JSONObject();
@@ -224,8 +224,5 @@ public class Configuration {
 
     }
 
-    public void showSettingActivity(Context context) {
-        context.startActivity(new Intent(context, SettingActivity.class));
-    }
 
 }
