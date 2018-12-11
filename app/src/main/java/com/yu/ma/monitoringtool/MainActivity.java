@@ -5,23 +5,18 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
-import com.ma.monitoringlibrary.Compression;
 import com.ma.monitoringlibrary.Measurement;
-import com.ma.monitoringlibrary.RSACipher;
 
-import java.io.IOException;
-import java.security.InvalidKeyException;
+import java.security.KeyPair;
+import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -39,9 +34,28 @@ public class MainActivity extends AppCompatActivity {
         measurement = new Measurement(this);
 
 
+        KeyPairGenerator keyPairGenerator = null;
+        try {
+            keyPairGenerator = KeyPairGenerator.getInstance("RSA");
+
+            keyPairGenerator.initialize(1024); // key length
+            KeyPair keyPair = keyPairGenerator.genKeyPair();
+            String privateKeyString = Base64.encodeToString(keyPair.getPrivate().getEncoded(), Base64.DEFAULT);
+            String publicKeyString = Base64.encodeToString(keyPair.getPublic().getEncoded(), Base64.DEFAULT);
+
+            // 2. print both keys
+            Log.e("keyS", "privateKey\n" + privateKeyString + "\n");
+            Log.e("keyS", "publicKey\n" + publicKeyString + "\n\n");
+
+
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
-    public  Bundle getMetaData(Context context) {
+    public Bundle getMetaData(Context context) {
         try {
             return context.getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA).metaData;
         } catch (PackageManager.NameNotFoundException e) {

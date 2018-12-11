@@ -45,6 +45,8 @@ public class Measurement {
     public Measurement(Context context) {
         this.context = context;
         preferences = context.getSharedPreferences(context.getString(R.string.monitoringPref), MODE_PRIVATE);
+
+
         //check tool is initializing
         if (!appIsInitialized())
             throw new RuntimeException("APP is not initialized via Measurement library : Call Measurement#init first");
@@ -237,7 +239,8 @@ public class Measurement {
                     String compressedPackage = Compression.Compress(packageObject.toString());
                     //   String encryptPackage = new Encryption(String.valueOf(System.currentTimeMillis())).Encrypt(compressedPackage);
 
-                    String encryptPackage = new RSACipher().encrypt(compressedPackage);
+                    Encryption encryption=new Encryption();
+                    String encryptPackage = encryption.Encrypt(compressedPackage);
 
                     //  String encryptPackage = new Encryption(String.valueOf(System.currentTimeMillis())).Encrypt(packageObject.toString());
                     //  String compressedPackage = Compression.Compress(encryptPackage);
@@ -245,6 +248,8 @@ public class Measurement {
                     /*TODO Send encryptPackage */
                     Log.e("compression", String.valueOf(compressedPackage));
                     Log.e("encryption", String.valueOf(encryptPackage));
+                    Log.e("SecretKey", encryption.getEncryptedSecretKey());
+
 
 
                 } catch (Exception e) {

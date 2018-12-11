@@ -32,6 +32,8 @@ import com.ma.monitoringlibrary.SettingActivity.SettingActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 import static android.content.Context.MODE_PRIVATE;
 
 class Configuration {
@@ -199,7 +201,24 @@ class Configuration {
             jsonProperties.put("SIMOperatorName", SIMOperatorName);
 
 
-            /*TODO Send jsonProperties as string  */
+            String compressedPackage = null;
+            try {
+                compressedPackage = Compression.Compress(jsonProperties.toString());
+                Encryption encryption=new Encryption();
+                String encryptPackage = encryption.Encrypt(compressedPackage);
+
+
+                /*TODO Send jsonProperties as string  */
+                Log.e("compression", String.valueOf(compressedPackage));
+                Log.e("encryption", String.valueOf(encryptPackage));
+                Log.e("SecretKey", encryption.getEncryptedSecretKey());
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
 
         } catch (JSONException e) {
             e.printStackTrace();
